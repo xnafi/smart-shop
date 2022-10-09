@@ -12,17 +12,23 @@ const Shop = () => {
 
   const handleBuy = product => {
     let newCart = []
-    const exits = products.find(pro => pro.id === product.id)
-    if (!exits) {
-      product.quantity = 1;
+    const exists = cart.find(
+      existingProduct => existingProduct.id === product.id
+    )
+    if (!exists) {
+      product.quantity = 1
       newCart = [...cart, product]
     } else {
-      const rest = cart.filter(pro => pro.id !== product.id)
-      exits.quantity = exits.quantity + 1
-      newCart = [...rest, exits]
+      const rest = cart.filter(
+        existingProduct => existingProduct.id !== product.id
+      )
+      exists.quantity = exists.quantity + 1
+      newCart = [...rest, exists]
     }
+
     setCart(newCart)
     addToDb(product.id)
+    toast.info('Info: Product Added!', { autoClose: 500 })
   }
   return (
     <div className='px-4 py-16 mx-auto sm:max-w-xl md:max-w-full lg:max-w-screen-xl md:px-24 lg:px-8 lg:py-20'>
